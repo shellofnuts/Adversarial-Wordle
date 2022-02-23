@@ -1,0 +1,9 @@
+@startuml Adversarial_Wordle
+
+class UserInput
+{
+    
+}
+
+
+@enduml
