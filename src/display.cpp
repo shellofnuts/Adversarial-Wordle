@@ -7,7 +7,7 @@ std::string SPACE = "    ";
 
 void print_incorrect(char letter)
 {
-    std::cout << "\033[38;5;246m" << (char)toupper(letter) << "\033[0m";
+    std::cout << "\033[38;5;240m" << (char)toupper(letter) << "\033[0m";
     std::cout << SPACE;
 }
 

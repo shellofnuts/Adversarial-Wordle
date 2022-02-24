@@ -1,5 +1,7 @@
 #include "game_loop.h"
 
+#include <fstream>
+
 Game::Game(std::string filename)
 {
     // Populate major classes
@@ -15,9 +17,9 @@ void Game::play()
         std::string user_input = get_input();
         update_opponent(user_input);
         update_board(user_input);
-        #ifdef _DEBUG
-            _internal_opponent->print_word_set();
-        #endif
+#ifdef _DEBUG
+        _internal_opponent->print_word_set();
+#endif
         current_iteration += 1;
     }
 }
@@ -35,13 +37,45 @@ bool Game::end_condition() const
     return false;
 }
 
+void help_info()
+{
+    std::ifstream help_file("help_info.txt");
+    std::string line;
+    if (help_file.is_open())
+    {
+        std::cout << "\033[2J";
+        std::string ansi_escape = "\\033";
+        while (std::getline(help_file, line))
+        {
+            std::string::size_type pos = 0;
+            while ((pos = line.find(ansi_escape, pos)) != std::string::npos)
+            {
+                line.replace(pos, 4, "\033");
+                pos += ansi_escape.size();
+            }
+            std::cout << line << "\n";
+        }
+    }
+    std::cout << "\nPress any key to return: >";
+    std::string tmp;
+    std::getline(std::cin, tmp);
+}
+
 std::string Game::get_input()
 {
     std::string user_input = _internal_display->get_user_input();
     while (!_internal_word_list->check_word(user_input))
     {
-        std::string err_msg = "\033[38;5;196m" + user_input + "\033[0m is an invalid word.\n";
-        _internal_display->update_display(err_msg);
+        if (user_input == "help")
+        {
+            help_info();
+            _internal_display->update_display();
+        }
+        else
+        {
+            std::string err_msg = "\033[38;5;196m" + user_input + "\033[0m is an invalid word.\n";
+            _internal_display->update_display(err_msg);
+        }
         user_input = _internal_display->get_user_input();
     }
     return user_input;

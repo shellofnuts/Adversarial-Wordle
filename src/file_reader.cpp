@@ -28,7 +28,7 @@ std::string trim(const std::string &s)
 
 WordList::WordList(std::string filename)
 {
-    std::ifstream word_file("wordle_words.txt");
+    std::ifstream word_file(filename);
     std::string word_line;
     if (word_file.is_open())
     {

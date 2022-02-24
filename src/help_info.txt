@@ -1,0 +1,18 @@
+Adversarial Wordle
+
+Adversarial Wordle is a game mimicing Absurdle by qntm.
+The computer dynamically chooses a list of words that is
+the furthest from your (The Player's) previous guesses.
+
+It is the aim of the Player to narrow down the computer to
+a single word in as few guesses as possible.
+
+The minimum achieved is 4, where 3 guesses is likely impossible
+to achieve.
+
+The Player must guess a 5-letter word. \033[38;5;40mGreen\033[0m indicates that the
+letter is in the correct position. \033[38;5;220mYellow\033[0m indicates that the
+letter appears in the word but not in that position. \033[38;5;240mGrey\033[0m indicates
+that the letter does not appear in the word at all.
+
+These guesses will be reflected on a keyboard to for the Player.
