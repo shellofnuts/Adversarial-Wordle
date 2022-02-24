@@ -19,11 +19,11 @@ public:
 
 private:
     void Display::refresh_display() const;
-    void Display::format_word(const std::string &word) const;
+    void Display::format_word(const std::string &word, const WordScore &score) const;
     void Display::format_word(const char &letter) const;
     void print_keyboard() const;
     std::vector<std::string> _guesses;
-
+    std::vector<WordScore> _guesses_score;
     std::map<char, WordScore::Score> _game_state;
     std::array<char, 26> _keyboard = {'q','w','e','r','t','y','u','i','o','p',
                                       'a','s','d','f','g','h','j','k','l',

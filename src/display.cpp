@@ -62,34 +62,33 @@ void Display::refresh_display() const
     for (auto i = 0; i < _guesses.size(); ++i)
     {
         std::cout << "> ";
-        this->format_word(_guesses[i]);
+        this->format_word(_guesses[i], _guesses_score[i]);
         std::cout << "\n";
     }
     std::cout << std::endl;
     print_keyboard();
 }
 
-void Display::format_word(const std::string &word) const
+void Display::format_word(const std::string &word, const WordScore &score) const
 {
-    for (const auto &j : word)
+    for (auto j = 0; j < word.size(); j++)
     {
-        auto ptr = _game_state.find(j);
-        switch (ptr->second)
+        switch (score.get_score(j))
         {
         case WordScore::Score::Yellow:
-            print_yellow(j);
+            print_yellow(word[j]);
             break;
 
         case WordScore::Score::Green:
-            print_green(j);
+            print_green(word[j]);
             break;
 
         case WordScore::Score::Incorrect:
-            print_incorrect(j);
+            print_incorrect(word[j]);
             break;
 
         default:
-            print_empty(j);
+            print_empty(word[j]);
             break;
         }
     }
@@ -137,6 +136,7 @@ void Display::add_guess(const std::string user_guess, const WordScore score)
     {
         _game_state[user_guess[i]] = score.get_score(i);
     }
+    _guesses_score.emplace_back(score);
 }
 
 std::string Display::get_user_input()
