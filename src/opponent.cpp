@@ -57,7 +57,8 @@ const WordScore Opponent::prune_words(const std::string user_guess)
     
     std::set<std::string> new_set(ptr->second.begin(), ptr->second.end());
     _word_set = new_set;
-    return ptr->first;
+    _previous_score = ptr->first;
+    return _previous_score;
 }
 
 
@@ -67,4 +68,9 @@ void Opponent::print_word_set() const
     {
         std::cout << i << "\n";
     }
+}
+
+int Opponent::get_previous_num_score() const
+{
+    return _previous_score.get_num_score();
 }

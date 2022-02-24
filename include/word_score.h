@@ -28,6 +28,5 @@ public:
 
 private:
     std::array<Score, 5> _word_score;
-    //std::set<std::string> _word_set;
     int size;
 };

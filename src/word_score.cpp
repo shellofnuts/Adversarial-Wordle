@@ -1,6 +1,7 @@
 #include <word_score.h>
 
 #include <exception>
+#include <math.h>
 
 WordScore::WordScore()
 {
@@ -54,11 +55,11 @@ int WordScore::get_num_score() const
         switch (curr_score)
         {
         case WordScore::Score::Yellow:
-            total_score += 1;
+            total_score += 1 * pow(10, i);
             break;
         
         case WordScore::Score::Green:
-            total_score += 10;
+            total_score += 2 * pow(10, i);
             break;
         default:
             total_score += 0;

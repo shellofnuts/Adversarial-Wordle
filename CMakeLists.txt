@@ -9,6 +9,8 @@ file(GLOB project_SRCS src/*.cpp)
 add_executable(adversarial_wordle ${project_SRCS})
 target_include_directories(adversarial_wordle PRIVATE include)
 
+set(CMAKE_CXX_FLAGS_DEBUG_INIT "-D_DEBUG")
+
 add_custom_command(
         TARGET ${PROJECT_NAME}  POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
