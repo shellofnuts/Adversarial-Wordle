@@ -1,7 +1,7 @@
 # Adversarial Wordle
 
 ## Building and Install
-This project requires Cmake >= v3.20 to build.
+This project requires Cmake >= v3.16 to build.
 ~~~
 mkdir build
 cd build
