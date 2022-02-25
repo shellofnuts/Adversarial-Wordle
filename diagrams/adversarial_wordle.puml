@@ -1,9 +1,107 @@
 @startuml Adversarial_Wordle
 
-class UserInput
+class Game
 {
-    
+    + Game(allowed_file, answers_file)
+    + play()
+
+    - string get_input()
+    - update_opponent(string guess)
+    - update_board(string guess)
+    - bool end_condition()
+
+    - unique_ptr<Display> _internal_display
+    - unique_ptr<WordList> _internal_word_list
+    - unique_ptr<WordList> _internal_answers
+    - unique_ptr<Opponent> _internal_opponent
 }
 
+class Display
+{
+    + Display()
+    + add_guess(string guess, WordScore score)
+    + update_display() const
+    + update_display(string err_msg) const
+    + string get_user_input()
+    - refresh_display() const
+    - format_word(const string &word, const WordScore &score) const
+    - format_word(const char &letter) const
+    - print_keyboard() const
+    - vector<string> _guesses
+    - vector<WordScore> _guesses_score
+    - map<char, WordScore::Score> _game_state
+    - array<char, 26> _keyboard 
+}
+
+class WordList
+{
+    + WordList(string filename)
+    + bool check_word(string word) const
+    + const set<std::string> &get_word_list() const
+    + print_set() const
+    - bool add_word(const string &word)
+    - set<string> _available_word_list
+    - Trie _word_checker 
+}
+
+class Opponent
+{
+    + Opponent(const WordList &master_record)
+    + const WordScore prune_words(const string guess)
+    + WordScore get_previous_score() const
+    + int get_previous_num_score() const
+    + string get_random_word() const
+    + void print_word_set() const
+    - vector<const string*> _word_set
+    - WordScore _previous_score
+}
+
+class Trie
+{
+    + Trie()
+    + bool insert(const string word)
+    + bool search(const string &word) const
+    - unique_ptr<TrieNode> create_node()
+    - TrieNode _head
+}
+
+class TrieNode <<S, LightBlue>>
+{
+    array<unique_ptr<TrieNode>, ALPHABET_SIZE> children
+    bool is_word
+}
+
+class WordScore
+{
+    + enum Score
+    + WordScore();
+    + set_score(const int position, const Score letter_score);
+    + Score get_score(const int position) const;
+    + int get_num_score() const;
+    + bool operator==(const WordScore &other) const;
+    + bool operator<(const WordScore &other) const;
+    - array<Score, 5> _word_score;
+    - int size;
+}
+
+enum Score
+{
+    Empty
+    Incorrect
+    Yellow
+    Green
+}
+
+Game *-- "2" WordList : Holds >
+Game *-- "1" Opponent : Instantiates >
+Game *-- "1" Display : Links >
+
+WordList *-- "1" Trie : Builds >
+Trie "1" *-- "1--*" TrieNode : Contains >
+
+Display *-- WordScore : Maintains >
+Opponent *-- WordScore : Compares >
+
+WordScore *-- Score
 
 @enduml

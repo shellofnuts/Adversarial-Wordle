@@ -17,9 +17,9 @@ public:
     std::string get_user_input();
 
 private:
-    void Display::refresh_display() const;
-    void Display::format_word(const std::string &word, const WordScore &score) const;
-    void Display::format_word(const char &letter) const;
+    void refresh_display() const;
+    void format_word(const std::string &word, const WordScore &score) const;
+    void format_word(const char &letter) const;
     void print_keyboard() const;
     std::vector<std::string> _guesses;
     std::vector<WordScore> _guesses_score;
