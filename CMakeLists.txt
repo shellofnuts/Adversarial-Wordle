@@ -11,12 +11,8 @@ target_include_directories(adversarial_wordle PRIVATE include)
 
 set(CMAKE_CXX_FLAGS_DEBUG_INIT "-D_DEBUG")
 
-file(GLOB text_files src/*.txt)
-
-foreach(CurrentTextFile IN LISTS text_files)
 add_custom_command(
         TARGET ${PROJECT_NAME}  POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CurrentTextFile}
-                $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-endforeach()
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/text
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
