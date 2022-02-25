@@ -28,24 +28,21 @@ std::string trim(const std::string &s)
 
 WordList::WordList(std::string filename)
 {
+
+    std::cout << "WordList Constructed\n";
     std::ifstream word_file(filename);
     std::string word_line;
     if (word_file.is_open())
     {
         while (std::getline(word_file, word_line))
         {
-            std::istringstream word_stringstream(word_line);
-            std::string current_word;
-
-            while (std::getline(word_stringstream, current_word, ','))
-            {
-                this->add_word(trim(current_word));
-            }
+            this->add_word(trim(word_line));
         }
     }
     else
     {
         std::string error_msg = "Cannot locate file " + filename + " in .exe directory.";
+        std::cout << error_msg << "\n";
         throw std::runtime_error(error_msg);
     }
 }
@@ -56,7 +53,7 @@ bool WordList::check_word(std::string word) const
     {
         return false;
     }
-    for (const char &letter: word)
+    for (const char &letter : word)
     {
         if (letter > 'z' || letter < 'A')
         {
@@ -82,7 +79,7 @@ void WordList::print_set() const
     }
 }
 
-std::set<std::string> WordList::get_word_list() const
+const std::set<std::string> &WordList::get_word_list() const
 {
     return _available_word_list;
 }

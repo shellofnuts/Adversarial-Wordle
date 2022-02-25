@@ -2,12 +2,13 @@
 
 #include <fstream>
 
-Game::Game(std::string filename)
+Game::Game(std::string allowed_words, std::string answers)
 {
     // Populate major classes
-    _internal_word_list = std::make_unique<WordList>(filename);
+    _internal_word_list = std::make_unique<WordList>(allowed_words);
+    _internal_answers = std::make_unique<WordList>(answers);
     _internal_display = std::make_unique<Display>();
-    _internal_opponent = std::make_unique<Opponent>(*_internal_word_list);
+    _internal_opponent = std::make_unique<Opponent>(*_internal_answers);
 }
 
 void Game::play()
@@ -21,6 +22,14 @@ void Game::play()
         _internal_opponent->print_word_set();
 #endif
         current_iteration += 1;
+    }
+    if (_internal_opponent->get_previous_num_score() == 22222)
+    {
+        std::cout << "\033[38;5;10mSuccess!\033[0m" << std::endl;
+    }
+    else
+    {
+        std::cout<< "The hidden word was: " << _internal_opponent->get_random_word() << std::endl;
     }
 }
 

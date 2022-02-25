@@ -43,7 +43,8 @@ void Display::print_keyboard() const
             std::cout << "\n      ";
         }
     }
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
 }
 
 Display::Display()
@@ -59,7 +60,7 @@ void Display::refresh_display() const
 {
     std::cout << "\033[0m\033[2J" << (SPACE + SPACE) << "\033[38;5;10mAdversarial Wordle\033[0m\n";
     std::cout << "Type \"help\" for rules on how to play!\n\n";
-    for (auto i = 0; i < _guesses.size(); ++i)
+    for (size_t i = 0; i < _guesses.size(); ++i)
     {
         std::cout << "> ";
         this->format_word(_guesses[i], _guesses_score[i]);
@@ -71,7 +72,7 @@ void Display::refresh_display() const
 
 void Display::format_word(const std::string &word, const WordScore &score) const
 {
-    for (auto j = 0; j < word.size(); j++)
+    for (size_t j = 0; j < word.size(); j++)
     {
         switch (score.get_score(j))
         {
@@ -85,6 +86,10 @@ void Display::format_word(const std::string &word, const WordScore &score) const
 
         case WordScore::Score::Incorrect:
             print_incorrect(word[j]);
+            break;
+
+        case WordScore::Score::Empty:
+            print_empty(word[j]);
             break;
 
         default:
@@ -112,6 +117,10 @@ void Display::format_word(const char &letter) const
         print_incorrect(letter);
         break;
 
+    case WordScore::Score::Empty:
+        print_empty(letter);
+        break;
+
     default:
         print_empty(letter);
         break;
@@ -132,7 +141,7 @@ void Display::update_display(std::string err_msg) const
 void Display::add_guess(const std::string user_guess, const WordScore score)
 {
     _guesses.emplace_back(user_guess);
-    for (int i = 0; i < user_guess.size(); ++i)
+    for (size_t i = 0; i < user_guess.size(); ++i)
     {
         _game_state[user_guess[i]] = score.get_score(i);
     }

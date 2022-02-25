@@ -13,7 +13,7 @@ public:
     WordList(std::string filename);
 
     bool check_word(std::string word) const;
-    std::set<std::string> get_word_list() const;
+    const std::set<std::string> &get_word_list() const;
     void print_set() const;
 private:
     bool add_word(const std::string &word);

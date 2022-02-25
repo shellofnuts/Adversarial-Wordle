@@ -9,7 +9,6 @@ class Display
 {
 public:
     Display();
-    ~Display(){};
 
     void add_guess(const std::string user_guess, const WordScore score);
     void update_display() const;

@@ -9,8 +9,7 @@
 class Game
 {
 public:
-    Game(std::string filename);
-    ~Game(){};
+    Game(std::string allowed_words, std::string answers);
 
     void play();
 
@@ -25,5 +24,6 @@ private:
 
     std::unique_ptr<Display> _internal_display;
     std::unique_ptr<WordList> _internal_word_list;
+    std::unique_ptr<WordList> _internal_answers;
     std::unique_ptr<Opponent> _internal_opponent;
 };
